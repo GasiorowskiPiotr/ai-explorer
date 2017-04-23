@@ -1,0 +1,26 @@
+{
+  "name": "ai-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "material-ui": "^0.17.4",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-router-dom": "^4.1.1",
+    "react-swipeable-views": "^0.12.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "xcopy /Y /E build\\* ..\\ai-explorer-dist\\ai-explorer && cd ..\\ai-explorer-dist\\ai-explorer && git add . && git commit -am\"Next commit\" && git push origin master"
+  }
+}
