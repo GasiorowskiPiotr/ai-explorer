@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -11,7 +13,8 @@
     "react-router-dom": "^4.1.1",
     "react-swipeable-views": "^0.12.1",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
