@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished } from './ui';
 import { aiLogsLoaded } from './ai';
+import { currentLoaded } from './current';
 import _ from 'lodash';
 
 export const LOAD_AI_LOGS = 'LOAD_AI_LOGS';
@@ -34,4 +35,26 @@ export function loadAILogs(appId, appKey, types, timeSpan) {
             dispatch(loadingAIsFinished());
         });
     }
-}
+};
+
+export function loadAIEntry(appId, appKey, type, entryId) {
+    return function(dispatch) {
+
+        dispatch(loadingAIs());
+
+        var apiHeaders = new Headers();
+        apiHeaders.set('x-api-key', appKey);
+
+        var url = `https://api.applicationinsights.io/beta/apps/${appId}/events/$all/${entryId}`;
+
+        fetch(url, { headers: apiHeaders })
+            .then(data => {
+                data.json().then(items => {
+                    dispatch(currentLoaded(items));
+                    dispatch(loadingAIsFinished());
+                });
+                
+            });
+
+    }
+};

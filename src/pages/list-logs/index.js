@@ -52,6 +52,10 @@ class _ListLogsPage extends Component {
         this.selectItem = this.selectItem.bind(this);
     }
 
+    static contextTypes = {
+        router: PropTypes.object.isRequired,
+    };
+
     onRefreshRequested() {
         this.props.onRefresh(
             this.props.app.appId,
@@ -63,7 +67,7 @@ class _ListLogsPage extends Component {
 
     selectItem(log) {
         return () => {
-
+            this.context.router.history.push(`/log/${this.props.app.appId}/entry/${log.type}/${log.id}`);
         };
     }
 
