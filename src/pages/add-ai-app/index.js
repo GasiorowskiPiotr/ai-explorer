@@ -57,6 +57,22 @@ class _AddAIAppPage extends Component {
         e.preventDefault();
         this.props.onNewApp(this.state.name, this.state.id, this.state.key);
         this.context.router.history.push('/');
+        this.saveToLocalStorage(this.state.name, this.state.id, this.state.key);
+        
+    }
+
+    saveToLocalStorage(name, id, key) {
+        var apps = JSON.parse(localStorage.getItem('__apps__'));
+        apps = apps || [];
+        apps.push({ 
+            appName: name,
+            appKey: key,
+            appId: id,
+            logs: [],
+            filters: { types:['$all'], date: 'PT24H' } 
+        });
+
+        localStorage.setItem('__apps__', JSON.stringify(apps));
     }
 
     cancel(e) {
