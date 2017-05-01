@@ -7,6 +7,8 @@ import { withRouter } from 'react-router';
 import { getAiApp } from '../../store';
 import { loadAIEntry } from '../../actions/ai-async';
 
+import Trace from './trace';
+
 class _EntryPage extends Component {
 
     static contextTypes = {
@@ -18,10 +20,23 @@ class _EntryPage extends Component {
     }
 
     render() {
-        var aaa = JSON.stringify(this.props.entry);
-        return (<div>
-            {aaa}
-        </div>);
+        
+        if(this.props.entry.id) {
+            if(this.props.type === 'trace') {
+                return(
+                    <Trace entry={this.props.entry} />
+                );
+            } else {
+                return (
+                    <div>Uknown</div>
+                );
+            }
+        } else {
+            return (
+                <div>Loading...</div>
+            );
+        }
+        
     }
 }
 

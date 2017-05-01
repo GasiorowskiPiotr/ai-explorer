@@ -50,7 +50,7 @@ export function loadAIEntry(appId, appKey, type, entryId) {
         fetch(url, { headers: apiHeaders })
             .then(data => {
                 data.json().then(items => {
-                    dispatch(currentLoaded(items));
+                    dispatch(currentLoaded(items.value[0]));
                     dispatch(loadingAIsFinished());
                 });
                 
