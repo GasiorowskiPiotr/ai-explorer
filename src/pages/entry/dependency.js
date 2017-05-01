@@ -9,25 +9,25 @@ const Dependency = ({entry}) => (
                 <Subheader>
                     <b>General</b>
                 </Subheader>
-                <ListItem primaryText={entry.timestamp} secondaryText={"Date"}/>
-                <ListItem primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
+                <ListItem key={'d'+entry.id} primaryText={entry.timestamp} secondaryText={"Date"}/>
+                <ListItem key={'op'+entry.id} primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
                 <Divider />
                 <Subheader>
                     <b>Dependency</b>
                 </Subheader>
-                <ListItem primaryText={entry.dependency.target} secondaryText={"Target"}/>
-                <ListItem primaryText={entry.dependency.data} secondaryText={"Data"}/>
-                <ListItem primaryText={entry.dependency.success} secondaryText={"Success?"}/>
-                <ListItem primaryText={entry.dependency.duration} secondaryText={"Duration [ms]"}/>
-                <ListItem primaryText={entry.dependency.resultCode} secondaryText={"Result Code"}/>
-                <ListItem primaryText={entry.dependency.type} secondaryText={"Type"}/>
-                <ListItem primaryText={entry.dependency.name} secondaryText={"Name"}/>
+                <ListItem key={'t'+entry.id} primaryText={entry.dependency.target} secondaryText={"Target"}/>
+                <ListItem key={'_'+entry.id} primaryText={entry.dependency.data} secondaryText={"Data"}/>
+                <ListItem key={'s'+entry.id} primaryText={entry.dependency.success} secondaryText={"Success?"}/>
+                <ListItem key={'l'+entry.id} primaryText={entry.dependency.duration} secondaryText={"Duration [ms]"}/>
+                <ListItem key={'res'+entry.id} primaryText={entry.dependency.resultCode} secondaryText={"Result Code"}/>
+                <ListItem key={'tp'+entry.id} primaryText={entry.dependency.type} secondaryText={"Type"}/>
+                <ListItem key={'n'+entry.id} primaryText={entry.dependency.name} secondaryText={"Name"}/>
                 <Divider />
                 <Subheader>
                     <b>Custom Dimensions</b>
                 </Subheader>
                 { Object.keys(entry.customDimensions).map(key => (
-                        <ListItem primaryText={entry.customDimensions[key]} secondaryText={key}  />
+                        <ListItem key={key+''+entry.id} primaryText={entry.customDimensions[key]} secondaryText={key}  />
                     )) }    
             </List>
 );

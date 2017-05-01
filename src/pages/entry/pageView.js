@@ -9,20 +9,20 @@ const CustomEvent = ({entry}) => (
                 <Subheader>
                     <b>General</b>
                 </Subheader>
-                <ListItem primaryText={entry.timestamp} secondaryText={"Date"}/>
-                <ListItem primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
+                <ListItem key={'d'+entry.id} primaryText={entry.timestamp} secondaryText={"Date"}/>
+                <ListItem key={'op'+entry.id} primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
                 <Divider />
                 <Subheader>
                     <b>Page View</b>
                 </Subheader>
-                <ListItem primaryText={entry.pageView.name} secondaryText={"Name"}/>
-                <ListItem primaryText={entry.pageView.url} secondaryText={"URL"}/>
+                <ListItem key={'n'+entry.id} primaryText={entry.pageView.name} secondaryText={"Name"}/>
+                <ListItem key={'url'+entry.id} primaryText={entry.pageView.url} secondaryText={"URL"}/>
                 <Divider />
                 <Subheader>
                     <b>Custom Dimensions</b>
                 </Subheader>
                 { Object.keys(entry.customDimensions).map(key => (
-                        <ListItem primaryText={entry.customDimensions[key]} secondaryText={key}  />
+                        <ListItem key={key+''+entry.id} primaryText={entry.customDimensions[key]} secondaryText={key}  />
                     )) }    
             </List>
 );

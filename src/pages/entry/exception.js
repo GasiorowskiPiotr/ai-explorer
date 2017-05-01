@@ -17,23 +17,23 @@ const Exception = ({entry}) => (
                 <Subheader>
                     <b>General</b>
                 </Subheader>
-                <ListItem primaryText={entry.timestamp} secondaryText={"Date"}/>
-                <ListItem primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
+                <ListItem key={'d'+entry.id} primaryText={entry.timestamp} secondaryText={"Date"}/>
+                <ListItem key={'op'+entry.id} primaryText={entry.operation ? entry.operation.name: 'N/A'} secondaryText={"Operation"}/>
                 <Divider />
                 <Subheader>
                     <b>Exception</b>
                 </Subheader>
-                <ListItem primaryText={entry.exception.problemId} secondaryText={"Problem ID"}/>
-                <ListItem primaryText={entry.exception.type} secondaryText={"Exception Type"}/>
-                <ListItem primaryText={entry.exception.outerMessage} secondaryText={"Outer Message"}/>
-                <ListItem primaryText={entry.exception.innermostMessage} secondaryText={"Innermost Message"}/>
-                <ListItem primaryText={formatStackTrace(entry.exception.details)} secondaryText={"StackTrace"}/>
+                <ListItem key={'pid'+entry.id} primaryText={entry.exception.problemId} secondaryText={"Problem ID"}/>
+                <ListItem key={'ext'+entry.id} primaryText={entry.exception.type} secondaryText={"Exception Type"}/>
+                <ListItem key={'om'+entry.id} primaryText={entry.exception.outerMessage} secondaryText={"Outer Message"}/>
+                <ListItem key={'im'+entry.id} primaryText={entry.exception.innermostMessage} secondaryText={"Innermost Message"}/>
+                <ListItem key={'st'+entry.id} primaryText={formatStackTrace(entry.exception.details)} secondaryText={"StackTrace"}/>
                 <Divider />
                 <Subheader>
                     <b>Custom Dimensions</b>
                 </Subheader>
                 { Object.keys(entry.customDimensions).map(key => (
-                        <ListItem primaryText={entry.customDimensions[key]} secondaryText={key}  />
+                        <ListItem key={key+''+entry.id} primaryText={entry.customDimensions[key]} secondaryText={key}  />
                     )) }    
             </List>
 );

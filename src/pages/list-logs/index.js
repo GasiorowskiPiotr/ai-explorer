@@ -60,8 +60,8 @@ class _ListLogsPage extends Component {
         this.props.onRefresh(
             this.props.app.appId,
             this.props.app.appKey,
-            ['$all'],
-            'PT24H'
+            this.props.app.filters.types,
+            this.props.app.filters.date
         );
     }
 
@@ -69,6 +69,10 @@ class _ListLogsPage extends Component {
         return () => {
             this.context.router.history.push(`/log/${this.props.app.appId}/entry/${log.type}/${log.id}`);
         };
+    }
+
+    componentDidMount() {
+        this.onRefreshRequested();
     }
 
     startFilters() {
