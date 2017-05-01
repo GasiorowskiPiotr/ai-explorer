@@ -8,6 +8,11 @@ import { getAiApp } from '../../store';
 import { loadAIEntry } from '../../actions/ai-async';
 
 import Trace from './trace';
+import CustomEvent from './customEvent';
+import PageView from './pageView';
+import Request from './request';
+import Dependency from './dependency';
+import Exception from './exception';
 
 class _EntryPage extends Component {
 
@@ -26,9 +31,29 @@ class _EntryPage extends Component {
                 return(
                     <Trace entry={this.props.entry} />
                 );
+            } else if(this.props.type === 'customEvent') {
+                return (
+                    <CustomEvent entry={this.props.entry} />
+                );
+            } else if(this.props.type === 'pageView') {
+                return (
+                    <PageView entry={this.props.entry} />
+                );
+            } else if(this.props.type === 'request') {
+                return (
+                    <Request entry={this.props.entry} />
+                );
+            } else if(this.props.type === 'dependency') {
+                return (
+                    <Dependency entry={this.props.entry} />
+                );
+            } else if(this.props.type === 'exception') {
+                return (
+                    <Exception entry={this.props.entry} />
+                );
             } else {
                 return (
-                    <div>Uknown</div>
+                    <div>Unknown / Unsupported Entry Type</div>
                 );
             }
         } else {
