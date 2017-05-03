@@ -20,8 +20,11 @@ class _AddAIAppPage extends Component {
 
         this.state = {
             name: '',
+            nameValid: true,
             id: '',
-            key: ''
+            idValid: true,
+            key: '',
+            keyValid: true
         };
 
         this.onNameChange = this.onNameChange.bind(this);
@@ -37,28 +40,54 @@ class _AddAIAppPage extends Component {
 
     onNameChange(_, name) {
         this.setState({
-            name: name
+            name: name,
+            nameValid: !!name
         });
     }
 
     onIDChange(_, id) {
         this.setState({
-            id: id
-        })
+            id: id,
+            idValid: !!id
+        });
     }
 
     onKeyChange(_, key) {
         this.setState({
-            key: key
+            key: key,
+            keyValid: !!key
         });
     }
 
     submit(e) {
         e.preventDefault();
-        this.props.onNewApp(this.state.name, this.state.id, this.state.key);
-        this.context.router.history.push('/');
-        this.saveToLocalStorage(this.state.name, this.state.id, this.state.key);
-        
+
+        let nameValid = true;
+        if(!this.state.name) {
+            nameValid = false;
+        }
+
+        let idValid = true;
+        if(!this.state.id) {
+            idValid = false;
+        }
+
+        let keyValid = true;
+        if(!this.state.key) {
+            keyValid = false;
+        }
+
+        if(nameValid && idValid && keyValid) {
+            this.props.onNewApp(this.state.name, this.state.id, this.state.key);
+            this.context.router.history.push('/');
+            this.saveToLocalStorage(this.state.name, this.state.id, this.state.key);
+        } else {
+            this.setState({
+                nameValid,
+                idValid,
+                keyValid
+            });
+        }
     }
 
     saveToLocalStorage(name, id, key) {
@@ -93,6 +122,9 @@ class _AddAIAppPage extends Component {
                     <CardTitle title="New AI App" subtitle="Start adding new AI App" />
                     <CardText>
                         <AddForm
+                            nameValid={this.state.nameValid}
+                            idValid={this.state.idValid}
+                            keyValid={this.state.keyValid}
                             onNameChange={this.onNameChange}
                             onIDChange={this.onIDChange}
                             onKeyChange={this.onKeyChange}
