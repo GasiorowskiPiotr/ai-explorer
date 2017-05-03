@@ -8,6 +8,7 @@ import {
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+import Snackbar from 'material-ui/Snackbar';
 
 import MenuItems from './MenuItems';
 
@@ -26,6 +27,7 @@ class _AppShell extends Component {
 
         this.toggleNavMenu = this.toggleNavMenu.bind(this);
         this.handleRedirect = this.handleRedirect.bind(this);
+        this.isThereMessage = this.isThereMessage.bind(this);
 
         this.state = {open: false};
     }
@@ -52,6 +54,14 @@ class _AppShell extends Component {
         return window.document.documentElement.clientWidth / 2 - 35;
     }
 
+    isThereMessage() {
+        if(this.props.message) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     render() {
         return (
             <div>
@@ -62,6 +72,7 @@ class _AppShell extends Component {
                             onLeftIconButtonTouchTap={this.toggleNavMenu}>
                         </AppBar>
                         <RefreshIndicator size={70} left={this.getLeft()} top={this.getTop()} status={this.props.loaderState} />
+                        <Snackbar open={this.isThereMessage()} message={this.props.message || ''} autoHideDuration={4000} />
                         <Drawer
                             docked={false}
                             open={this.state.open}
@@ -84,7 +95,8 @@ class _AppShell extends Component {
 
 const mapStateToProps = ({ui}) => {
     return {
-        loaderState: ui.state
+        loaderState: ui.state,
+        message: ui.message
     };
 };
 

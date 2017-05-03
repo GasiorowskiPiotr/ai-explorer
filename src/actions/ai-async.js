@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { loadingAIs, loadingAIsFinished } from './ui';
+import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
 import { aiLogsLoaded } from './ai';
 import { currentLoaded } from './current';
 import _ from 'lodash';
@@ -21,7 +21,7 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip) {
             .map(url => new Promise((resolve, reject) => {
                 fetch(url, { headers: apiHeaders})
                     .then(data => {
-                        return data.json().then((resp) => resolve(resp.value));
+                        return data.json().then((resp) => resolve(resp.value)).catch(reject);
                     })
                     .catch(reject);
             }));  
@@ -34,6 +34,8 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip) {
 
             dispatch(aiLogsLoaded(appId, sorted, top, skip));
             dispatch(loadingAIsFinished());
+        }).catch(() => {
+            dispatch(loadingAIsFailed());
         });
     }
 };
@@ -53,8 +55,11 @@ export function loadAIEntry(appId, appKey, type, entryId) {
                 data.json().then(items => {
                     dispatch(currentLoaded(items.value[0]));
                     dispatch(loadingAIsFinished());
+                }).catch(() => {
+                    dispatch(loadingAIsFailed());
                 });
-                
+            }).catch(() => {
+                dispatch(loadingAIsFailed());
             });
 
     }

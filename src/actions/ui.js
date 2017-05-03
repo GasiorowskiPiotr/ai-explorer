@@ -16,6 +16,13 @@ export function loadingAIsFinished() {
     };
 }
 
+export const LOADING_AIS_FAILED = 'LOADING_AIS_FAILED';
+export function loadingAIsFailed() {
+    return {
+        type: LOADING_AIS_FAILED
+    };
+}
+
 // deprecated
 export function goToAiList() {
     return {

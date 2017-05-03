@@ -1,4 +1,4 @@
-import { GO_TO_ADD_AI, GO_TO_AI, GO_TO_AI_LIST, LOADING_AIS, LOADING_AIS_FINISHED } from '../actions/ui';
+import { GO_TO_ADD_AI, GO_TO_AI, GO_TO_AI_LIST, LOADING_AIS, LOADING_AIS_FINISHED, LOADING_AIS_FAILED } from '../actions/ui';
 
 const defaultState = {
     title: 'Your AI Apps',
@@ -17,10 +17,13 @@ export default function ui(state = defaultState, action) {
             return defaultState;
         }
         case LOADING_AIS: {
-            return Object.assign({}, state, { isLoading: true, state: 'loading' });
+            return Object.assign({}, state, { isLoading: true, state: 'loading', message: '' });
         }
         case LOADING_AIS_FINISHED: {
-            return Object.assign({}, state, { isLoading: false, state: 'hide' });
+            return Object.assign({}, state, { isLoading: false, state: 'hide', message: '' });
+        }
+        case LOADING_AIS_FAILED: {
+            return Object.assign({}, state, { isLoading: false, state: 'hide', message: 'Loading failed' });
         }
         default: {
             return state;
