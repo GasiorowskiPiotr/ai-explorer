@@ -22,12 +22,14 @@ export function removeAiApp(appId) {
     };
 };
 
-export function aiLogsLoaded(appId, logs) {
+export function aiLogsLoaded(appId, logs, top, skip) {
     return {
         type: AI_LOGS_LOADED,
         app: {
             appId
         },
-        logs
+        logs,
+        top,
+        skip
     };
 };

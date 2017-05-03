@@ -9,7 +9,7 @@ export const LOAD_AI_LOGS_SUCCEEDED = 'LOAD_AI_LOGS_SUCCEEDED';
 export const LOAD_AI_LOGS_FAILED = 'LOAD_AI_LOGS_FAILED';
 
 
-export function loadAILogs(appId, appKey, types, timeSpan) {
+export function loadAILogs(appId, appKey, types, timeSpan, top, skip) {
     return function(dispatch) {
 
         dispatch(loadingAIs());
@@ -17,7 +17,7 @@ export function loadAILogs(appId, appKey, types, timeSpan) {
         var apiHeaders = new Headers();
         apiHeaders.set('x-api-key', appKey);
 
-        var promises = _.map(types, type => `https://api.applicationinsights.io/beta/apps/${appId}/events/${type}?timespan=${timeSpan}&$top=100`)
+        var promises = _.map(types, type => `https://api.applicationinsights.io/beta/apps/${appId}/events/${type}?timespan=${timeSpan}&$top=${top}&$skip=${skip}`)
             .map(url => new Promise((resolve, reject) => {
                 fetch(url, { headers: apiHeaders})
                     .then(data => {
@@ -30,8 +30,9 @@ export function loadAILogs(appId, appKey, types, timeSpan) {
             
             var concat = _.flatMap(items);
             var sorted = _.sortBy(concat, ['timestamp']);
+            sorted = _.reverse(sorted);
 
-            dispatch(aiLogsLoaded(appId, sorted));
+            dispatch(aiLogsLoaded(appId, sorted, top, skip));
             dispatch(loadingAIsFinished());
         });
     }

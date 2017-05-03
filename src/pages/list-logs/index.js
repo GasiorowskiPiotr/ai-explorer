@@ -53,6 +53,7 @@ class _ListLogsPage extends Component {
         this.selectItem = this.selectItem.bind(this);
         this.closeFilters = this.closeFilters.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
+        this.loadMore = this.loadMore.bind(this);
 
         this.state = {
             showingFilters: false
@@ -68,7 +69,20 @@ class _ListLogsPage extends Component {
             this.props.app.appId,
             this.props.app.appKey,
             this.props.app.filters.types,
-            this.props.app.filters.date
+            this.props.app.filters.date,
+            this.props.app.top,
+            this.props.app.skip
+        );
+    }
+
+    loadMore() {
+        this.props.onRefresh(
+            this.props.app.appId,
+            this.props.app.appKey,
+            this.props.app.filters.types,
+            this.props.app.filters.date,
+            this.props.app.top,
+            this.props.app.skip + this.props.app.top
         );
     }
 
@@ -99,14 +113,16 @@ class _ListLogsPage extends Component {
             this.props.app.appId,
             this.props.app.appKey,
             types,
-            date
+            date,
+            100,
+            0
         );
     }
 
     render() {
 
-        var items = this.props.app.logs.map(log => (
-            <ListItem key={log.id}
+        var items = this.props.app.logs.map((log, idx) => (
+            <ListItem key={idx}
                 rightIconButton={rightIconMenu(log, this)}
                 leftIcon={prepareIcon(log)}
                 primaryText={formatFirstLine(log)}
@@ -115,6 +131,12 @@ class _ListLogsPage extends Component {
                 onTouchTap={this.selectItem(log).bind(this)} />
             
         ));
+
+        var loadMore = (
+            <ListItem key={"load-more-items"}>
+                <FlatButton label="Load more..." fullWidth={true} onTouchTap={this.loadMore}/>
+            </ListItem>
+        );
 
         return (
             <div>
@@ -131,11 +153,7 @@ class _ListLogsPage extends Component {
                     </Subheader>
                     <Divider />
                     {items}
-                    <FloatingActionButton 
-                        style={style}
-                        onTouchTap={this.onRefreshRequested}>
-                        <Replay />
-                    </FloatingActionButton>
+                    {loadMore}
                 </List>
             </div>
         )
@@ -150,7 +168,7 @@ const mapStateToProps = ({ }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRefresh: (appId, appKey, types, timeSpan) => dispatch(loadAILogs(appId, appKey, types, timeSpan))
+        onRefresh: (appId, appKey, types, timeSpan, top, skip) => dispatch(loadAILogs(appId, appKey, types, timeSpan, top, skip))
     };
 }
 
