@@ -7,6 +7,7 @@ import {
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 import MenuItems from './MenuItems';
 
@@ -43,6 +44,14 @@ class _AppShell extends Component {
         this.props.onRedirect(where);
     };
 
+    getTop() {
+        return window.document.documentElement.clientHeight / 2 - 35;
+    }
+
+    getLeft() {
+        return window.document.documentElement.clientWidth / 2 - 35;
+    }
+
     render() {
         return (
             <div>
@@ -52,6 +61,7 @@ class _AppShell extends Component {
                             title="AI Explorer"
                             onLeftIconButtonTouchTap={this.toggleNavMenu}>
                         </AppBar>
+                        <RefreshIndicator size={70} left={this.getLeft()} top={this.getTop()} status={this.props.loaderState} />
                         <Drawer
                             docked={false}
                             open={this.state.open}
@@ -74,7 +84,7 @@ class _AppShell extends Component {
 
 const mapStateToProps = ({ui}) => {
     return {
-        title: ui.title
+        loaderState: ui.state
     };
 };
 

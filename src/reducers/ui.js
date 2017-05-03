@@ -17,10 +17,10 @@ export default function ui(state = defaultState, action) {
             return defaultState;
         }
         case LOADING_AIS: {
-            return Object.assign({}, state, { isLoading: true });
+            return Object.assign({}, state, { isLoading: true, state: 'loading' });
         }
         case LOADING_AIS_FINISHED: {
-            return Object.assign({}, state, { isLoading: false });
+            return Object.assign({}, state, { isLoading: false, state: 'hide' });
         }
         default: {
             return state;
