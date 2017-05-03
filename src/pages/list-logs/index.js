@@ -15,6 +15,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import FilterEditor from './FilterEditor';
 
 import { loadAILogs } from '../../actions/ai-async';
 import { getAiApp } from '../../store';
@@ -50,6 +51,12 @@ class _ListLogsPage extends Component {
         this.onRefreshRequested = this.onRefreshRequested.bind(this);
         this.startFilters = this.startFilters.bind(this);
         this.selectItem = this.selectItem.bind(this);
+        this.closeFilters = this.closeFilters.bind(this);
+        this.handleFilterChange = this.handleFilterChange.bind(this);
+
+        this.state = {
+            showingFilters: false
+        };
     }
 
     static contextTypes = {
@@ -76,7 +83,24 @@ class _ListLogsPage extends Component {
     }
 
     startFilters() {
-        
+        this.setState({
+            showingFilters: true
+        });
+    }
+
+    closeFilters() {
+        this.setState({
+            showingFilters: false
+        });
+    }
+
+    handleFilterChange(date, types) {
+        this.props.onRefresh(
+            this.props.app.appId,
+            this.props.app.appKey,
+            types,
+            date
+        );
     }
 
     render() {
@@ -93,18 +117,27 @@ class _ListLogsPage extends Component {
         ));
 
         return (
-            <List>
-                <Subheader>
-                    <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
-                </Subheader>
-                <Divider />
-                {items}
-                <FloatingActionButton 
-                    style={style}
-                    onTouchTap={this.onRefreshRequested}>
-                    <Replay />
-                </FloatingActionButton>
-            </List>
+            <div>
+                <FilterEditor 
+                    open={this.state.showingFilters} 
+                    date={this.props.app.filters.date}
+                    types={this.props.app.filters.types}
+                    close={this.closeFilters}
+                    filter={this.handleFilterChange}
+                />
+                <List>
+                    <Subheader>
+                        <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
+                    </Subheader>
+                    <Divider />
+                    {items}
+                    <FloatingActionButton 
+                        style={style}
+                        onTouchTap={this.onRefreshRequested}>
+                        <Replay />
+                    </FloatingActionButton>
+                </List>
+            </div>
         )
     }
 }
