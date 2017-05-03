@@ -46,6 +46,7 @@ class _ListAIAppPage extends Component {
 
         this.onAddRequested = this.onAddRequested.bind(this);
         this.selectItem = this.selectItem.bind(this);
+        this.removeFromLocalStorage = this.removeFromLocalStorage.bind(this);
     }
 
     static contextTypes = {
@@ -62,8 +63,17 @@ class _ListAIAppPage extends Component {
 
     deleteItem(app) {
         return () => {
+            this.removeFromLocalStorage(app.appId);
             this.props.deleteItem(app.appId);
         }
+    }
+
+    removeFromLocalStorage(appId) {
+        var apps = JSON.parse(localStorage.getItem('__apps__'));
+        apps = apps || [];
+        apps = apps.filter(a => a.appId !== appId)
+
+        localStorage.setItem('__apps__', JSON.stringify(apps));
     }
 
     render() {
