@@ -12,7 +12,12 @@ export default function ai(state = defaultState || [], action) {
         }
         case AI_LOGS_LOADED: {
             var app = state.find(app => app.appId === action.app.appId);
-            app = Object.assign({}, app, { top: action.top, skip: action.skip,  logs: [...app.logs, ...action.logs]});
+            if(!action.reload) {
+                app = Object.assign({}, app, { top: action.top, skip: action.skip,  logs: [...app.logs, ...action.logs]});
+            } else {
+                app = Object.assign({}, app, { top: action.top, skip: action.skip,  logs: action.logs});
+            }
+            
             return [...state.filter(app => app.appId !== action.app.appId), app];
         }
         default: {

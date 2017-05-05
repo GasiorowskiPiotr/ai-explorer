@@ -71,7 +71,8 @@ class _ListLogsPage extends Component {
             this.props.app.filters.types,
             this.props.app.filters.date,
             this.props.app.top,
-            this.props.app.skip
+            this.props.app.skip,
+            true
         );
     }
 
@@ -82,7 +83,8 @@ class _ListLogsPage extends Component {
             this.props.app.filters.types,
             this.props.app.filters.date,
             this.props.app.top,
-            this.props.app.skip + this.props.app.top
+            this.props.app.skip + this.props.app.top,
+            false
         );
     }
 
@@ -115,8 +117,10 @@ class _ListLogsPage extends Component {
             types,
             date,
             100,
-            0
+            0,
+            true
         );
+        this.closeFilters();
     }
 
     render() {
@@ -168,7 +172,7 @@ const mapStateToProps = ({ }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRefresh: (appId, appKey, types, timeSpan, top, skip) => dispatch(loadAILogs(appId, appKey, types, timeSpan, top, skip))
+        onRefresh: (appId, appKey, types, timeSpan, top, skip, refresh) => dispatch(loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh))
     };
 }
 

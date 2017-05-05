@@ -9,7 +9,7 @@ export const LOAD_AI_LOGS_SUCCEEDED = 'LOAD_AI_LOGS_SUCCEEDED';
 export const LOAD_AI_LOGS_FAILED = 'LOAD_AI_LOGS_FAILED';
 
 
-export function loadAILogs(appId, appKey, types, timeSpan, top, skip) {
+export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
     return function(dispatch) {
 
         dispatch(loadingAIs());
@@ -32,7 +32,7 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip) {
             var sorted = _.sortBy(concat, ['timestamp']);
             sorted = _.reverse(sorted);
 
-            dispatch(aiLogsLoaded(appId, sorted, top, skip));
+            dispatch(aiLogsLoaded(appId, sorted, top, skip, refresh));
             dispatch(loadingAIsFinished());
         }).catch(() => {
             dispatch(loadingAIsFailed());

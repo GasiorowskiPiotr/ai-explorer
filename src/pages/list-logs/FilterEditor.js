@@ -49,7 +49,9 @@ export default class FilterEditor extends Component {
         }).bind(this);
     }
 
-    filter() {
+    filter(e) {
+
+        e.preventDefault();
 
         let types = [];
         if(this.state.traces && 
