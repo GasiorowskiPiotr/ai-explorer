@@ -50,6 +50,9 @@ export function formatSecondLine(log) {
 };
 
 export function prepareIcon(log) {
+    if(!log) {
+        return (<Extensions/>);
+    }
     switch(log.type) {
         case TRACE: return (<Info/>);
         case CUSTOM_EVENT: return (<CheckCircle/>);
@@ -59,6 +62,6 @@ export function prepareIcon(log) {
         case DEPENDENCY: return (<GroupWork/>);
         case EXCEPTION: return (<Error/>);
         case AVAILABILITY_RESULT: return (<SettingsEthernet/>);
-        default: return (<Extensions/>)
+        default: return (<Extensions/>);
     } 
 }

@@ -98,7 +98,9 @@ class _AddAIAppPage extends Component {
             appKey: key,
             appId: id,
             logs: [],
-            filters: { types:['$all'], date: 'PT24H' } 
+            filters: { types:['$all'], date: 'PT24H' },
+            top: 100,
+            skip: 0
         });
 
         localStorage.setItem('__apps__', JSON.stringify(apps));

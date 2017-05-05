@@ -27,33 +27,33 @@ class _EntryPage extends Component {
     render() {
         
         if(this.props.entry.id) {
-            if(this.props.type === 'trace') {
+            if(this.props.type === 'trace' && this.props.entry.trace) {
                 return(
                     <Trace entry={this.props.entry} />
                 );
-            } else if(this.props.type === 'customEvent') {
+            } else if(this.props.type === 'customEvent' && this.props.entry.customEvent) {
                 return (
                     <CustomEvent entry={this.props.entry} />
                 );
-            } else if(this.props.type === 'pageView') {
+            } else if(this.props.type === 'pageView' && this.props.entry.pageView) {
                 return (
                     <PageView entry={this.props.entry} />
                 );
-            } else if(this.props.type === 'request') {
+            } else if(this.props.type === 'request' && this.props.entry.request) {
                 return (
                     <Request entry={this.props.entry} />
                 );
-            } else if(this.props.type === 'dependency') {
+            } else if(this.props.type === 'dependency' && this.props.entry.dependency) {
                 return (
                     <Dependency entry={this.props.entry} />
                 );
-            } else if(this.props.type === 'exception') {
+            } else if(this.props.type === 'exception' && this.props.entry.exception) {
                 return (
                     <Exception entry={this.props.entry} />
                 );
             } else {
                 return (
-                    <div>Unknown / Unsupported Entry Type</div>
+                    <div>Loading...</div>
                 );
             }
         } else {
