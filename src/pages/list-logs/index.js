@@ -70,8 +70,8 @@ class _ListLogsPage extends Component {
             this.props.app.appKey,
             this.props.app.filters.types,
             this.props.app.filters.date,
-            this.props.app.top,
-            this.props.app.skip,
+            100,
+            0,
             true
         );
     }
@@ -157,6 +157,7 @@ class _ListLogsPage extends Component {
                 <List>
                     <Subheader>
                         <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
+                        <FlatButton onTouchTap={this.onRefreshRequested}>Reload</FlatButton>
                     </Subheader>
                     <Divider />
                     {items}
