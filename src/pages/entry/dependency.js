@@ -26,9 +26,10 @@ const Dependency = ({entry}) => (
                 <Subheader>
                     <b>Custom Dimensions</b>
                 </Subheader>
-                { Object.keys(entry.customDimensions).map(key => (
+                { entry.customDimensions ?  Object.keys(entry.customDimensions).map(key => (
                         <ListItem key={key+''+entry.id} primaryText={entry.customDimensions[key]} secondaryText={key}  />
-                    )) }    
+                    )) : ''
+                }    
             </List>
 );
 

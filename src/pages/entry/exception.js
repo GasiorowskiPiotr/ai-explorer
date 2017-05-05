@@ -8,7 +8,7 @@ import sortBy from 'lodash/sortBy';
 
 const formatStackTrace = (details) => {
     return (<ul>
-        {sortBy(details[0].parsedStack, ['level']).map(sf => (<li>{ sf.method }</li>))}
+        {sortBy(details[0].parsedStack, ['level']).map((sf, idx) => (<li key={idx}>{ sf.method }</li>))}
     </ul>) 
 };
 
@@ -32,9 +32,12 @@ const Exception = ({entry}) => (
                 <Subheader>
                     <b>Custom Dimensions</b>
                 </Subheader>
-                { Object.keys(entry.customDimensions).map(key => (
+                { 
+                    entry.customDimensions ? 
+                    Object.keys(entry.customDimensions).map(key => (
                         <ListItem key={key+''+entry.id} primaryText={entry.customDimensions[key]} secondaryText={key}  />
-                    )) }    
+                    )) : ''
+                }    
             </List>
 );
 

@@ -25,7 +25,7 @@ const titles = {
     pageView: 'PAGE VIEW',
     browserTiming: 'BROWSER TIMING',
     request: 'REQUEST',
-    depenency: 'DEPENDENCY',
+    dependency: 'DEPENDENCY',
     exception: 'EXCEPTION',
     availabilityResult: 'AVAILABILITY RESULT',
     systemEvent: 'SYSTEM EVENT'
