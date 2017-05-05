@@ -98,7 +98,9 @@ class _ListLogsPage extends Component {
     }
 
     componentDidMount() {
-        this.onRefreshRequested();
+        if(this.props.app.logs && this.props.app.logs.length === 0) {
+            this.onRefreshRequested();
+        }
     }
 
     startFilters() {
