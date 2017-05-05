@@ -76,7 +76,10 @@ class _ListLogsPage extends Component {
         );
     }
 
-    loadMore() {
+    loadMore(e) {
+
+        e.preventDefault();
+
         this.props.onRefresh(
             this.props.app.appId,
             this.props.app.appKey,

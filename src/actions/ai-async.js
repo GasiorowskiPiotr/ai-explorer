@@ -32,7 +32,7 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
             var sorted = _.sortBy(concat, ['timestamp']);
             sorted = _.reverse(sorted);
 
-            dispatch(aiLogsLoaded(appId, sorted, top, skip, refresh));
+            dispatch(aiLogsLoaded(appId, sorted, types, timeSpan, top, skip, refresh));
             dispatch(loadingAIsFinished());
         }).catch(() => {
             dispatch(loadingAIsFailed());

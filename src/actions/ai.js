@@ -22,7 +22,7 @@ export function removeAiApp(appId) {
     };
 };
 
-export function aiLogsLoaded(appId, logs, top, skip, reload = false) {
+export function aiLogsLoaded(appId, logs, types, timeSpan, top, skip, reload = false) {
     return {
         type: AI_LOGS_LOADED,
         app: {
@@ -31,6 +31,8 @@ export function aiLogsLoaded(appId, logs, top, skip, reload = false) {
         logs,
         top,
         skip,
-        reload
+        reload,
+        types,
+        timeSpan
     };
 };
