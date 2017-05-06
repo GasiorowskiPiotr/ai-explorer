@@ -24,6 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "xcopy /Y /E build\\* ..\\ai-explorer-dist\\ai-explorer && cd ..\\ai-explorer-dist\\ai-explorer && git add . && git commit -am\"Next commit\" && git push origin master"
+    "deploy": "xcopy /Y /E build\\* ..\\ai-explorer-dist\\ai-explorer && cd ..\\ai-explorer-dist\\ai-explorer && git add . && git commit -am\"Next commit\" && git push origin master",
+    "deploy-dev": "xcopy /Y /E build\\* ..\\ai-explorer-dist-dev\\ai-explorer-dev && cd ..\\ai-explorer-dist-dev\\ai-explorer-dev && git add . && git commit -am\"Next commit\" && git push origin master"
   }
 }
