@@ -15,3 +15,4 @@ Simple log viewer for Microsoft Azure Application Insights, which is also the ex
 4. Implement all log types
 5. Filter by custom time span
 6. Implement background sync for exception notifications
+7. Tests on different devices
