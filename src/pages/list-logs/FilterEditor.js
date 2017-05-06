@@ -101,7 +101,7 @@ export default class FilterEditor extends Component {
         ];
 
         return (
-            <Dialog title="Filters" modal={true} open={this.props.open} actions={actions}>
+            <Dialog title="Filters" modal={true} open={this.props.open} actions={actions} autoScrollBodyContent={true}>
                     <SelectField floatingLabelText="Time span" value={this.state.date} onChange={this.onDateChange}>
                         <MenuItem value="PT1H" primaryText="Last hour" />
                         <MenuItem value="PT4H" primaryText="Last 4 hours" />
