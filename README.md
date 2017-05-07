@@ -9,10 +9,10 @@ Simple log viewer for Microsoft Azure Application Insights, which is also the ex
 4. View details
 
 ## Plans
-0. Use AIs to log exceptions :)
+0. ~~Use AIs to log exceptions :)~~
 1. Easier access to Application Insights (without typing AI Key and AI ID).
 2. Implement Service Worker (for assets caching)
-3. Show summary of Exceptions in header
+3. ~~Show summary of Exceptions in header~~
 4. Implement all log types
 5. Filter by custom time span
 6. Implement background sync for exception notifications
