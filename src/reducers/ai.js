@@ -1,4 +1,4 @@
-import { ADD_AI_APP, REMOVE_AI_APP, AI_LOGS_LOADED } from '../actions/ai';
+import { ADD_AI_APP, REMOVE_AI_APP, AI_LOGS_LOADED, AI_STATS_LOADED } from '../actions/ai';
 
 const defaultState = JSON.parse(localStorage.getItem('__apps__'));
 
@@ -19,6 +19,12 @@ export default function ai(state = defaultState || [], action) {
             }
             
             return [...state.filter(app => app.appId !== action.app.appId), app];
+        }
+        case AI_STATS_LOADED: {
+            var app = state.find(app => app.appId === action.appId);
+            app = Object.assign({}, app, { exceptions: action.exceptions });
+
+            return [...state.filter(app => app.appId !== action.appId), app];
         }
         default: {
             return state;
