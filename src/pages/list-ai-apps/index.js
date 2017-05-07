@@ -36,7 +36,8 @@ const rightIconMenu = (app, instance) => (
 const style = {
     position: 'fixed',
     bottom: '20px',
-    right: '20px'
+    right: '20px',
+    zIndex: 1000
 };
 
 class _ListAIAppPage extends Component {
