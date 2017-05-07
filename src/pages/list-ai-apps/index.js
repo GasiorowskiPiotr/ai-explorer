@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { sortBy } from 'lodash';
 
 import { withRouter } from 'react-router';
 
@@ -79,7 +80,7 @@ class _ListAIAppPage extends Component {
 
     render() {
 
-        var items = this.props.apps.map(app => (
+        var items = sortBy(this.props.apps, [(i) => i.appName.toLowerCase()]).map(app => (
             <ListItem key={app.appId}
                 rightIconButton={rightIconMenu(app, this)}
                 primaryText={app.appName}
