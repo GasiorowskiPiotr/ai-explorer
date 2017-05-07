@@ -45,7 +45,7 @@ export default class FilterEditor extends Component {
             let state = { };
             state[typeName] = isInputChecked;
             this.setState(state);
-
+             // eslint-disable-next-line
         }).bind(this);
     }
 

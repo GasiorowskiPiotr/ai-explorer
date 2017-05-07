@@ -7,9 +7,7 @@ import { withRouter } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
-import Replay from 'material-ui/svg-icons/av/replay';
 import {grey400} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -36,12 +34,6 @@ const rightIconMenu = (log, instance) => (
     <MenuItem onTouchTap={instance.selectItem(log)}>Explore</MenuItem>
   </IconMenu>
 );
-
-const style = {
-    position: 'fixed',
-    bottom: '20px',
-    right: '20px'
-};
 
 class _ListLogsPage extends Component {
 
@@ -173,6 +165,7 @@ class _ListLogsPage extends Component {
     }
 }
 
+ // eslint-disable-next-line
 const mapStateToProps = ({ }, ownProps) => {
     return {
         app: getAiApp(ownProps.match.params.id)

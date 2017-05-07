@@ -11,7 +11,7 @@ export default function ai(state = defaultState || [], action) {
             return state.filter(app => app.appId !== action.app.appId);
         }
         case AI_LOGS_LOADED: {
-            var app = state.find(app => app.appId === action.app.appId);
+            let app = state.find(app => app.appId === action.app.appId);
             if(!action.reload) {
                 app = Object.assign({}, app, { top: action.top, skip: action.skip, filters: { types: [...action.types], date: action.timeSpan }, logs: [...app.logs, ...action.logs]});
             } else {
@@ -21,7 +21,7 @@ export default function ai(state = defaultState || [], action) {
             return [...state.filter(app => app.appId !== action.app.appId), app];
         }
         case AI_STATS_LOADED: {
-            var app = state.find(app => app.appId === action.appId);
+            let app = state.find(app => app.appId === action.appId);
             app = Object.assign({}, app, { exceptions: action.exceptions });
 
             return [...state.filter(app => app.appId !== action.appId), app];
