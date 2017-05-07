@@ -158,8 +158,11 @@ class _ListLogsPage extends Component {
                 />
                 <List>
                     <Subheader>
-                        <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
-                        <FlatButton onTouchTap={this.onRefreshRequested}>Reload</FlatButton>
+                            <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
+                            <FlatButton onTouchTap={this.onRefreshRequested}>Reload</FlatButton>
+                            <span style={{ paddingLeft: '30px' }}>
+                            Exceptions: {this.props.app.exceptions || 0}
+                            </span>
                     </Subheader>
                     <Divider />
                     {items}
