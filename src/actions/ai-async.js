@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
-import { aiLogsLoaded } from './ai';
+import { aiLogsLoaded, aiStatsLoaded } from './ai';
 import { currentLoaded } from './current';
 import _ from 'lodash';
 
@@ -36,6 +36,12 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
             dispatch(loadingAIsFinished());
         }).catch(() => {
             dispatch(loadingAIsFailed());
+        }).then(() => {
+            const countUrl = `https://api.applicationinsights.io/beta/apps/${appId}/events/exceptions?timespan=${timeSpan}&$select=id&$count=true`;
+            fetch(countUrl, {headers: apiHeaders})
+                .then(data => {
+                    return data.json().then((resp) => dispatch(aiStatsLoaded(appId, resp['@odata.count'])));
+                });
         });
     }
 };

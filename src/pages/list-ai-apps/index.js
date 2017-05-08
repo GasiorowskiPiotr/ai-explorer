@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { sortBy } from 'lodash';
 
 import { withRouter } from 'react-router';
 
@@ -36,7 +37,8 @@ const rightIconMenu = (app, instance) => (
 const style = {
     position: 'fixed',
     bottom: '20px',
-    right: '20px'
+    right: '20px',
+    zIndex: 1000
 };
 
 class _ListAIAppPage extends Component {
@@ -78,7 +80,7 @@ class _ListAIAppPage extends Component {
 
     render() {
 
-        var items = this.props.apps.map(app => (
+        var items = sortBy(this.props.apps, [(i) => i.appName.toLowerCase()]).map(app => (
             <ListItem key={app.appId}
                 rightIconButton={rightIconMenu(app, this)}
                 primaryText={app.appName}

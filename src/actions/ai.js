@@ -1,6 +1,7 @@
 export const ADD_AI_APP = 'ADD_AI_APP';
 export const REMOVE_AI_APP = 'REMOVE_AI_APP';
 export const AI_LOGS_LOADED = 'AI_LOGS_LOADED';
+export const AI_STATS_LOADED = 'AI_STATS_LOADED';
 
 export function addAIApp(appId, appKey, appName) {
     return {
@@ -36,3 +37,11 @@ export function aiLogsLoaded(appId, logs, types, timeSpan, top, skip, reload = f
         timeSpan
     };
 };
+
+export function aiStatsLoaded(appId, exceptions) {
+    return {
+        type: AI_STATS_LOADED,
+        appId,
+        exceptions
+    };
+}

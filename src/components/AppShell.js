@@ -19,6 +19,10 @@ import EntryPage from '../pages/entry';
 
 import { goToAddAi, goToAiList } from '../actions/ui';
 
+const loaderStyle = {
+    position: 'fixed'
+};
+
 class _AppShell extends Component {
 
 
@@ -71,7 +75,7 @@ class _AppShell extends Component {
                             title="AI Explorer"
                             onLeftIconButtonTouchTap={this.toggleNavMenu}>
                         </AppBar>
-                        <RefreshIndicator size={70} left={this.getLeft()} top={this.getTop()} status={this.props.loaderState} />
+                        <RefreshIndicator size={70} left={this.getLeft()} top={this.getTop()} status={this.props.loaderState} style={loaderStyle}/>
                         <Snackbar open={this.isThereMessage()} message={this.props.message || ''} autoHideDuration={4000} />
                         <Drawer
                             docked={false}
