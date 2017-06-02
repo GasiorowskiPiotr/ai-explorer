@@ -51,7 +51,7 @@ export default class FilterEditor extends Component {
 
     filter(e) {
 
-        e.preventDefault();
+        e && e.preventDefault();
 
         let types = [];
         if(this.state.traces && 
