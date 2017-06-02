@@ -46,6 +46,7 @@ class _ListLogsPage extends Component {
         this.closeFilters = this.closeFilters.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.loadMore = this.loadMore.bind(this);
+        this.showExceptions = this.showExceptions.bind(this);
 
         this.state = {
             showingFilters: false
@@ -120,6 +121,18 @@ class _ListLogsPage extends Component {
         this.closeFilters();
     }
 
+    showExceptions() {
+        this.props.onRefresh(
+            this.props.app.appId,
+            this.props.app.appKey,
+            ['exceptions'],
+            this.props.app.filters.date,
+            100,
+            0,
+            true
+        );
+    }
+
     render() {
 
         var items = this.props.app.logs.map((log, idx) => (
@@ -152,9 +165,7 @@ class _ListLogsPage extends Component {
                     <Subheader>
                             <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
                             <FlatButton onTouchTap={this.onRefreshRequested}>Reload</FlatButton>
-                            <span style={{ paddingLeft: '30px' }}>
-                            Exceptions: {this.props.app.exceptions || 0}
-                            </span>
+                            <FlatButton onTouchTap={this.showExceptions} secondary={true} style={ {paddingLeft: "15px", paddingRight: "15px"} }>Exceptions: {this.props.app.exceptions || 0}</FlatButton>
                     </Subheader>
                     <Divider />
                     {items}
