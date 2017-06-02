@@ -60,11 +60,16 @@ class _ListAIAppPage extends Component {
     }
 
     selectItem(app) {
-        return () => this.context.router.history.push(`/logs/${app.appId}`);
+        return (e) => { 
+            e && e.preventDefault();
+            this.context.router.history.push(`/logs/${app.appId}`); 
+        };
     }
 
     deleteItem(app) {
-        return () => {
+        return (e) => {
+            e && e.preventDefault();
+
             this.removeFromLocalStorage(app.appId);
             this.props.deleteItem(app.appId);
         }

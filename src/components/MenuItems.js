@@ -9,7 +9,9 @@ export default class MenuItems extends Component {
     };
 
     handleRedirect(where) {
-        return () => {
+        return (e) => {
+            e && e.preventDefault();
+
             this.context.router.history.push(where);
             this.props.onSelected(where);
         }

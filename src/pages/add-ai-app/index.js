@@ -60,7 +60,7 @@ class _AddAIAppPage extends Component {
     }
 
     submit(e) {
-        e.preventDefault();
+        e && e.preventDefault();
 
         let nameValid = true;
         if(!this.state.name) {
@@ -107,7 +107,7 @@ class _AddAIAppPage extends Component {
     }
 
     cancel(e) {
-        e.preventDefault();
+        e && e.preventDefault();
         this.setState({
             name: '',
             id: '',

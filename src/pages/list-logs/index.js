@@ -57,7 +57,10 @@ class _ListLogsPage extends Component {
         router: PropTypes.object.isRequired,
     };
 
-    onRefreshRequested() {
+    onRefreshRequested(e) {
+
+        e && e.preventDefault();
+
         this.props.onRefresh(
             this.props.app.appId,
             this.props.app.appKey,
@@ -71,7 +74,7 @@ class _ListLogsPage extends Component {
 
     loadMore(e) {
 
-        e.preventDefault();
+        e && e.preventDefault();
 
         this.props.onRefresh(
             this.props.app.appId,
@@ -85,7 +88,11 @@ class _ListLogsPage extends Component {
     }
 
     selectItem(log) {
-        return () => {
+        
+        return (e) => {
+
+            e && e.preventDefault();
+
             this.context.router.history.push(`/log/${this.props.app.appId}/entry/${log.type}/${log.id}`);
         };
     }
@@ -96,13 +103,19 @@ class _ListLogsPage extends Component {
         }
     }
 
-    startFilters() {
+    startFilters(e) {
+
+        e && e.preventDefault();
+
         this.setState({
             showingFilters: true
         });
     }
 
-    closeFilters() {
+    closeFilters(e) {
+
+        e && e.preventDefault();
+
         this.setState({
             showingFilters: false
         });
@@ -121,7 +134,10 @@ class _ListLogsPage extends Component {
         this.closeFilters();
     }
 
-    showExceptions() {
+    showExceptions(e) {
+
+        e && e.preventDefault();
+
         this.props.onRefresh(
             this.props.app.appId,
             this.props.app.appKey,
