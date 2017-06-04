@@ -1,12 +1,11 @@
 const key = '__apps__';
 
 export function getAll() {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(key)) || [];
 };
 
 export function saveApp(name, id, key) {
-    let apps = getAll();
-    apps = apps || [];
+    const apps = getAll();
     apps.push({ 
         appName: name,
         appKey: key,
@@ -21,8 +20,7 @@ export function saveApp(name, id, key) {
 };
 
 export function saveAllApps(newApps) {
-    let apps = getAll();
-    apps = apps || [];
+    const apps = getAll();
     newApps.forEach(function(element) {
         var { appName, appKey, appId } = element;
 
@@ -37,13 +35,12 @@ export function saveAllApps(newApps) {
         });   
     });
 
-    localStorage.setItem('__apps__', JSON.stringify(apps));
+    localStorage.setItem(key, JSON.stringify(apps));
 };
 
 export function removeById(id) {
-    let apps = getAll();
-    apps = apps || [];
+    const apps = getAll();
     apps = apps.filter(a => a.appId !== id)
 
-    localStorage.setItem('__apps__', JSON.stringify(apps));
+    localStorage.setItem(key, JSON.stringify(apps));
 };
