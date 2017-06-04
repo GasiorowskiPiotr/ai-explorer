@@ -1,7 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
-import { aiLogsLoaded, aiStatsLoaded } from './ai';
+import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag } from './ai';
 import { currentLoaded } from './current';
+import { saveAllApps } from '../repository'
 import _ from 'lodash';
 
 export const LOAD_AI_LOGS = 'LOAD_AI_LOGS';
@@ -67,6 +68,28 @@ export function loadAIEntry(appId, appKey, type, entryId) {
             }).catch(() => {
                 dispatch(loadingAIsFailed());
             });
+
+    }
+};
+
+export function addAIGroup(code) {
+    return function(dispatch) {
+
+        dispatch(loadingAIs());
+
+        var url = `https://api-ai-explorer.azurewebsites.net/groups/${code}`;
+
+        fetch(url)
+            .then(data => {
+                return data.json().then(resp => {
+                    saveAllApps(resp.apps);
+                    
+                    dispatch(aag(resp.apps));
+                    dispatch(loadingAIsFinished());
+                });
+            }).catch(() => {
+                dispatch(loadingAIsFailed());
+            })
 
     }
 };
