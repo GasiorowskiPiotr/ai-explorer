@@ -16,6 +16,7 @@ import AddAIPage from '../pages/add-ai-app';
 import ListAIAppPage from '../pages/list-ai-apps';
 import ListLogsPage from '../pages/list-logs';
 import EntryPage from '../pages/entry';
+import AddAIGroupPage from '../pages/add-ai-group';
 
 import { goToAddAi, goToAiList } from '../actions/ui';
 
@@ -90,6 +91,7 @@ class _AppShell extends Component {
                         <Route path="/add" component={AddAIPage}/>
                         <Route path="/logs/:id" component={ListLogsPage}/>
                         <Route path="/log/:id/entry/:etype/:eid" component={EntryPage} />
+                        <Route path="/add-batch" component={AddAIGroupPage} />
                     </div>
                 </Router>
             </div>

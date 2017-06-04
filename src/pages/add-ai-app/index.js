@@ -11,6 +11,8 @@ import { addAIApp } from '../../actions/ai';
 
 import { withRouter } from 'react-router';
 
+import { saveApp } from '../../repository';
+
 
 
 class _AddAIAppPage extends Component {
@@ -60,7 +62,7 @@ class _AddAIAppPage extends Component {
     }
 
     submit(e) {
-        e.preventDefault();
+        e && e.preventDefault();
 
         let nameValid = true;
         if(!this.state.name) {
@@ -91,23 +93,11 @@ class _AddAIAppPage extends Component {
     }
 
     saveToLocalStorage(name, id, key) {
-        var apps = JSON.parse(localStorage.getItem('__apps__'));
-        apps = apps || [];
-        apps.push({ 
-            appName: name,
-            appKey: key,
-            appId: id,
-            logs: [],
-            filters: { types:['$all'], date: 'PT24H' },
-            top: 100,
-            skip: 0
-        });
-
-        localStorage.setItem('__apps__', JSON.stringify(apps));
+        saveApp(name, id, key);
     }
 
     cancel(e) {
-        e.preventDefault();
+        e && e.preventDefault();
         this.setState({
             name: '',
             id: '',
@@ -129,8 +119,8 @@ class _AddAIAppPage extends Component {
                             keyValid={this.state.keyValid}
                             onNameChange={this.onNameChange}
                             onIDChange={this.onIDChange}
-                            onKeyChange={this.onKeyChange}
-                        ></AddForm>
+                            onKeyChange={this.onKeyChange}>
+                        </AddForm>
                     </CardText>
                     <CardActions>
                         <FlatButton primary={true} label="Add" onTouchTap={this.submit} />

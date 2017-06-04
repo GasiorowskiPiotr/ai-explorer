@@ -46,6 +46,7 @@ class _ListLogsPage extends Component {
         this.closeFilters = this.closeFilters.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.loadMore = this.loadMore.bind(this);
+        this.showExceptions = this.showExceptions.bind(this);
 
         this.state = {
             showingFilters: false
@@ -56,7 +57,10 @@ class _ListLogsPage extends Component {
         router: PropTypes.object.isRequired,
     };
 
-    onRefreshRequested() {
+    onRefreshRequested(e) {
+
+        e && e.preventDefault();
+
         this.props.onRefresh(
             this.props.app.appId,
             this.props.app.appKey,
@@ -70,7 +74,7 @@ class _ListLogsPage extends Component {
 
     loadMore(e) {
 
-        e.preventDefault();
+        e && e.preventDefault();
 
         this.props.onRefresh(
             this.props.app.appId,
@@ -84,7 +88,11 @@ class _ListLogsPage extends Component {
     }
 
     selectItem(log) {
-        return () => {
+        
+        return (e) => {
+
+            e && e.preventDefault();
+
             this.context.router.history.push(`/log/${this.props.app.appId}/entry/${log.type}/${log.id}`);
         };
     }
@@ -95,13 +103,19 @@ class _ListLogsPage extends Component {
         }
     }
 
-    startFilters() {
+    startFilters(e) {
+
+        e && e.preventDefault();
+
         this.setState({
             showingFilters: true
         });
     }
 
-    closeFilters() {
+    closeFilters(e) {
+
+        e && e.preventDefault();
+
         this.setState({
             showingFilters: false
         });
@@ -118,6 +132,21 @@ class _ListLogsPage extends Component {
             true
         );
         this.closeFilters();
+    }
+
+    showExceptions(e) {
+
+        e && e.preventDefault();
+
+        this.props.onRefresh(
+            this.props.app.appId,
+            this.props.app.appKey,
+            ['exceptions'],
+            this.props.app.filters.date,
+            100,
+            0,
+            true
+        );
     }
 
     render() {
@@ -152,9 +181,7 @@ class _ListLogsPage extends Component {
                     <Subheader>
                             <FlatButton onTouchTap={this.startFilters}>Filters</FlatButton>
                             <FlatButton onTouchTap={this.onRefreshRequested}>Reload</FlatButton>
-                            <span style={{ paddingLeft: '30px' }}>
-                            Exceptions: {this.props.app.exceptions || 0}
-                            </span>
+                            <FlatButton onTouchTap={this.showExceptions} secondary={true} style={ {paddingLeft: "15px", paddingRight: "15px"} }>Exceptions: {this.props.app.exceptions || 0}</FlatButton>
                     </Subheader>
                     <Divider />
                     {items}

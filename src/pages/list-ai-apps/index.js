@@ -18,6 +18,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import { removeAiApp } from '../../actions/ai';
 
+import { removeById } from '../../repository'
+
 const iconButtonElement = (
   <IconButton
     touch={true}
@@ -60,22 +62,23 @@ class _ListAIAppPage extends Component {
     }
 
     selectItem(app) {
-        return () => this.context.router.history.push(`/logs/${app.appId}`);
+        return (e) => { 
+            e && e.preventDefault();
+            this.context.router.history.push(`/logs/${app.appId}`); 
+        };
     }
 
     deleteItem(app) {
-        return () => {
+        return (e) => {
+            e && e.preventDefault();
+
             this.removeFromLocalStorage(app.appId);
             this.props.deleteItem(app.appId);
         }
     }
 
     removeFromLocalStorage(appId) {
-        var apps = JSON.parse(localStorage.getItem('__apps__'));
-        apps = apps || [];
-        apps = apps.filter(a => a.appId !== appId)
-
-        localStorage.setItem('__apps__', JSON.stringify(apps));
+        removeById(appId);
     }
 
     render() {
