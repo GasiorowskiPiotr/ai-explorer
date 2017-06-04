@@ -22,6 +22,7 @@ export default class MenuItems extends Component {
             <div>
                 <MenuItem onTouchTap={this.handleRedirect('/').bind(this)}>My AI Apps</MenuItem>
                 <MenuItem onTouchTap={this.handleRedirect('/add').bind(this)}>Add AI App</MenuItem>
+                <MenuItem onTouchTap={this.handleRedirect('/add-batch').bind(this)}>Add AI Group</MenuItem>
             </div>
         );
     }

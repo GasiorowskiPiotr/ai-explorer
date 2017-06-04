@@ -2,6 +2,7 @@ export const ADD_AI_APP = 'ADD_AI_APP';
 export const REMOVE_AI_APP = 'REMOVE_AI_APP';
 export const AI_LOGS_LOADED = 'AI_LOGS_LOADED';
 export const AI_STATS_LOADED = 'AI_STATS_LOADED';
+export const ADD_AI_GROUP = 'ADD_AI_GROUP';
 
 export function addAIApp(appId, appKey, appName) {
     return {
@@ -11,6 +12,13 @@ export function addAIApp(appId, appKey, appName) {
             appKey,
             appName
         }
+    };
+};
+
+export function addAIGroup(apps) {
+    return {
+        type: ADD_AI_GROUP,
+        apps
     };
 };
 
