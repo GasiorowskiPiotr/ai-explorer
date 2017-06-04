@@ -47,8 +47,10 @@ class _AddAIAppGroupPage extends Component {
             codeValid = false;
         }
 
-        this.props.onNewAppGroup(this.state.code);
-        this.context.router.history.push('/');
+        if(codeValid) {
+            this.props.onNewAppGroup(this.state.code);
+            this.context.router.history.push('/');
+        }
     }
 
     cancel(e) {

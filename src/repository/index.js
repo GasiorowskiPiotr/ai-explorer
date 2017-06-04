@@ -40,7 +40,7 @@ export function saveAllApps(newApps) {
 
 export function removeById(id) {
     const apps = getAll();
-    apps = apps.filter(a => a.appId !== id)
+    const newApps = apps.filter(a => a.appId !== id)
 
-    localStorage.setItem(key, JSON.stringify(apps));
+    localStorage.setItem(key, JSON.stringify(newApps));
 };
