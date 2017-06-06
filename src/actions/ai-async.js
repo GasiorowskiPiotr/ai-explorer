@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
-import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag } from './ai';
+import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag, removeAiApp as raa, addAIApp } from './ai';
 import { currentLoaded } from './current';
-import { saveAllApps } from '../repository'
+import { saveAllApps, getAll, removeById, saveApp as saveAiApp } from '../repository'
 import _ from 'lodash';
 
 export const LOAD_AI_LOGS = 'LOAD_AI_LOGS';
@@ -82,14 +82,54 @@ export function addAIGroup(code) {
         fetch(url)
             .then(data => {
                 return data.json().then(resp => {
-                    saveAllApps(resp.apps);
-                    
-                    dispatch(aag(resp.apps));
-                    dispatch(loadingAIsFinished());
+                    return saveAllApps(resp.apps)
+                        .then(() => dispatch(aag(resp.apps)))
+                        .then(() => dispatch(loadingAIsFinished()));
                 });
             }).catch(() => {
                 dispatch(loadingAIsFailed());
-            })
-
+            });
     }
 };
+
+const isLoaded = false;
+
+export function loadAiApps() {
+    return function(dispatch) {
+        
+        if(isLoaded)
+            return;
+
+        dispatch(loadingAIs());
+
+        getAll().then(apps => {
+            dispatch(aag(apps));
+            dispatch(loadingAIsFinished());
+
+            isLoaded = true;
+        }).catch(() => dispatch(loadingAIsFinished()));
+    }
+}
+
+export function removeAiApp(appId) {
+    return function(dispatch) {
+        dispatch(loadingAIs());
+
+        removeById(appId).then(() => {
+            dispatch(raa(appId));
+            dispatch(loadingAIsFinished());
+        });
+    }
+}
+
+export function saveApp(name, id, key) {
+    return function(dispatch) {
+        dispatch(loadingAIs());
+
+        saveAiApp(name, id, key)
+            .then(() => {
+                dispatch(addAIApp(id, key, name));
+                dispatch(loadingAIsFinished());
+            });
+    }
+}
