@@ -18,7 +18,7 @@ import ListLogsPage from '../pages/list-logs';
 import EntryPage from '../pages/entry';
 import AddAIGroupPage from '../pages/add-ai-group';
 
-import { goToAddAi, goToAiList } from '../actions/ui';
+import { goToAddAi, goToAiList, loadingAIsFinished } from '../actions/ui';
 
 const loaderStyle = {
     position: 'fixed'
@@ -67,6 +67,10 @@ class _AppShell extends Component {
         }
     }
 
+    clearMessage() {
+        this.props.onMessageClosed();
+    }
+
     render() {
         return (
             <div>
@@ -77,7 +81,7 @@ class _AppShell extends Component {
                             onLeftIconButtonTouchTap={this.toggleNavMenu}>
                         </AppBar>
                         <RefreshIndicator size={70} left={this.getLeft()} top={this.getTop()} status={this.props.loaderState} style={loaderStyle}/>
-                        <Snackbar open={this.isThereMessage()} message={this.props.message || ''} autoHideDuration={4000} />
+                        <Snackbar open={this.isThereMessage()} message={this.props.message || ''} autoHideDuration={4000} onRequestClose={this.clearMessage()} />
                         <Drawer
                             docked={false}
                             open={this.state.open}
@@ -114,6 +118,9 @@ const mapDispatchToProps = (dispatch) => {
             } else if(where === '/add') {
                 dispatch(goToAddAi());
             }
+        },
+        onMessageClosed: () => {
+            dispatch(loadingAIsFinished());
         }
     }
 };

@@ -84,7 +84,8 @@ export function addAIGroup(code) {
                 return data.json().then(resp => {
                     return saveAllApps(resp.apps)
                         .then(() => dispatch(aag(resp.apps)))
-                        .then(() => dispatch(loadingAIsFinished()));
+                        .then(() => dispatch(loadingAIsFinished()))
+                        .catch(() => dispatch(aag(resp.apps)));
                 });
             }).catch(() => {
                 dispatch(loadingAIsFailed());
