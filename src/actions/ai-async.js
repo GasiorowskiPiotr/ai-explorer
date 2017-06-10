@@ -82,10 +82,10 @@ export function addAIGroup(code) {
         fetch(url)
             .then(data => {
                 return data.json().then(resp => {
+                    dispatch(aag(resp.apps));
+
                     return saveAllApps(resp.apps)
-                        .then(() => dispatch(aag(resp.apps)))
-                        .then(() => dispatch(loadingAIsFinished()))
-                        .catch(() => dispatch(aag(resp.apps)));
+                        .then(() => dispatch(loadingAIsFinished()));
                 });
             }).catch(() => {
                 dispatch(loadingAIsFailed());
@@ -108,16 +108,18 @@ export function loadAiApps() {
             dispatch(loadingAIsFinished());
 
             isLoaded = true;
-        }).catch(() => dispatch(loadingAIsFinished()));
+        }).catch(() => dispatch(loadingAIsFailed()));
     }
 }
 
 export function removeAiApp(appId) {
     return function(dispatch) {
         dispatch(loadingAIs());
+        dispatch(raa(appId));
 
         removeById(appId).then(() => {
-            dispatch(raa(appId));
+            dispatch(loadingAIsFinished());
+        }).catch(() => {
             dispatch(loadingAIsFinished());
         });
     }
@@ -127,9 +129,13 @@ export function saveApp(name, id, key) {
     return function(dispatch) {
         dispatch(loadingAIs());
 
+        dispatch(addAIApp(id, key, name));
+
         saveAiApp(name, id, key)
             .then(() => {
-                dispatch(addAIApp(id, key, name));
+                dispatch(loadingAIsFinished());
+            })
+            .catch(() => {
                 dispatch(loadingAIsFinished());
             });
     }
