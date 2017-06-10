@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
 import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag, removeAiApp as raa, addAIApp } from './ai';
 import { currentLoaded } from './current';
-import { saveAllApps, getAll, removeById, saveApp as saveAiApp } from '../repository'
+import { saveAllApps, getAll, removeById, saveApp as saveAiApp, saveGroupKey, getGroupKey } from '../repository'
 import _ from 'lodash';
 
 export const LOAD_AI_LOGS = 'LOAD_AI_LOGS';
@@ -80,19 +80,22 @@ export function addAIGroup(code) {
 
         dispatch(loadingAIs());
 
-        var url = `https://api-ai-explorer.azurewebsites.net/groups/${code}`;
+        saveGroupKey(code).then(() => {
 
-        fetch(url)
-            .then(data => {
-                return data.json().then(resp => {
-                    dispatch(aag(resp.apps));
+            var url = `https://api-ai-explorer.azurewebsites.net/groups/${code}`;
 
-                    return saveAllApps(resp.apps)
-                        .then(() => dispatch(loadingAIsFinished()));
+            return fetch(url)
+                .then(data => {
+                    return data.json().then(resp => {
+                        dispatch(aag(resp.apps));
+
+                        return saveAllApps(resp.apps)
+                            .then(() => dispatch(loadingAIsFinished()));
+                    });
+                }).catch(() => {
+                    dispatch(loadingAIsFailed());
                 });
-            }).catch(() => {
-                dispatch(loadingAIsFailed());
-            });
+        });
     }
 };
 
@@ -107,9 +110,17 @@ export function loadAiApps() {
         dispatch(loadingAIs());
 
         getAll().then(apps => {
-            dispatch(aag(apps));
-            dispatch(loadingAIsFinished());
+            if(apps.length > 0) {
+                dispatch(aag(apps));
+                dispatch(loadingAIsFinished());
+            } else {
+                getGroupKey().then((key) => {
 
+                    dispatch(addAIGroup(key));
+
+                });
+            }
+            
             isLoaded = true;
         }).catch(() => dispatch(loadingAIsFailed()));
     }

@@ -1,9 +1,18 @@
 import * as localforage from 'localforage';
 
 const key = '__apps__';
+const groupKey = '__group__';
 
 function saveAll(items) {
     return localforage.setItem(key, items);
+};
+
+export function saveGroupKey(key) {
+    return localforage.setItem(groupKey, key);
+};
+
+export function getGroupKey() {
+    return localforage.getItem(groupKey);
 };
 
 export function getAll() {
