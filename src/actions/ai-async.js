@@ -61,11 +61,14 @@ export function loadAIEntry(appId, appKey, type, entryId) {
             .then(data => {
                 data.json().then(items => {
                     dispatch(currentLoaded(items.value[0]));
-                    dispatch(loadingAIsFinished());
                 }).catch(() => {
                     dispatch(loadingAIsFailed());
                 });
-            }).catch(() => {
+            })
+            .then(() => {
+                dispatch(loadingAIsFinished());
+            })
+            .catch(() => {
                 dispatch(loadingAIsFailed());
             });
 
