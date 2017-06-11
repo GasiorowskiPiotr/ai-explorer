@@ -99,7 +99,7 @@ export function addAIGroup(code) {
     }
 };
 
-const isLoaded = false;
+let isLoaded = false;
 
 export function loadAiApps() {
     return function(dispatch) {
@@ -110,18 +110,26 @@ export function loadAiApps() {
         dispatch(loadingAIs());
 
         getAll().then(apps => {
+
+            isLoaded = true;
+
             if(apps.length > 0) {
                 dispatch(aag(apps));
                 dispatch(loadingAIsFinished());
+
+                return Promise.resolve();
+
             } else {
-                getGroupKey().then((key) => {
+                return getGroupKey().then((key) => {
 
-                    dispatch(addAIGroup(key));
-
+                    if(key) {
+                        dispatch(addAIGroup(key));
+                    } else {
+                        dispatch(loadingAIsFinished());
+                    }
                 });
             }
             
-            isLoaded = true;
         }).catch(() => dispatch(loadingAIsFailed()));
     }
 }
