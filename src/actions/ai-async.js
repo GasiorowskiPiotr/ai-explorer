@@ -95,6 +95,8 @@ export function addAIGroup(code) {
                 }).catch(() => {
                     dispatch(loadingAIsFailed());
                 });
+        }).catch(() => {
+            dispatch(loadingAIsFailed('Adding AI Group failed. This may be caused by lack of connectivity, legacy browser or private mode.'));
         });
     }
 };
@@ -130,7 +132,7 @@ export function loadAiApps() {
                 });
             }
             
-        }).catch(() => dispatch(loadingAIsFailed()));
+        }).catch(() => dispatch(loadingAIsFailed('Loading AI Apps failed. This may be caused by lack of connectivity, legacy browser or private mode.')));
     }
 }
 
@@ -142,7 +144,7 @@ export function removeAiApp(appId) {
         removeById(appId).then(() => {
             dispatch(loadingAIsFinished());
         }).catch(() => {
-            dispatch(loadingAIsFinished());
+            dispatch(loadingAIsFailed('Removing AI App failed. This may be caused by legacy browser or private mode.'));
         });
     }
 }
@@ -158,7 +160,7 @@ export function saveApp(name, id, key) {
                 dispatch(loadingAIsFinished());
             })
             .catch(() => {
-                dispatch(loadingAIsFinished());
+                dispatch(loadingAIsFailed('Adding AI App failed. This may be caused by legacy browser or private mode.'));
             });
     }
 }

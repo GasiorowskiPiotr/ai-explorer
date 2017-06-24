@@ -24,9 +24,10 @@ export function loadingAIsFinished() {
 }
 
 export const LOADING_AIS_FAILED = 'LOADING_AIS_FAILED';
-export function loadingAIsFailed() {
+export function loadingAIsFailed(message = null) {
     return {
-        type: LOADING_AIS_FAILED
+        type: LOADING_AIS_FAILED,
+        message
     };
 }
 

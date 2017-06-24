@@ -8,24 +8,11 @@ function saveAll(items) {
 };
 
 export function saveGroupKey(key) {
-    return new Promise((resolve, reject) => {
-        try {
-            localStorage.setItem(groupKey, JSON.stringify(key));
-            resolve(key);
-        } catch (e) {
-            reject(e);
-        }        
-    });
+    return localforage.setItem(groupKey, key);
 };
 
 export function getGroupKey() {
-    return new Promise((resolve, reject) => {
-        try {
-            resolve(JSON.parse(localStorage.getItem(groupKey)));
-        } catch(e) {
-            reject(e);
-        }
-    });
+    return localforage.getItem(groupKey);
 };
 
 export function getAll() {

@@ -122,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
         onMessageClosed: () => {
             setTimeout(() => {
                 dispatch(messageHidden());
-            }, 100);
+            }, 4000);
         }
     }
 };
