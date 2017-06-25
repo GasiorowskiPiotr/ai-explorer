@@ -16,6 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FilterEditor from './FilterEditor';
 
 import { loadAILogs } from '../../actions/ai-async';
+import { currentLoaded } from '../../actions/current';
 import { getAiApp } from '../../store';
 
 import { prepareIcon, formatFirstLine, formatSecondLine } from './formatter';
@@ -93,6 +94,7 @@ class _ListLogsPage extends Component {
 
             e && e.preventDefault();
 
+            this.props.onSelect(log);
             this.context.router.history.push(`/log/${this.props.app.appId}/entry/${log.type}/${log.id}`);
         };
     }
@@ -201,7 +203,8 @@ const mapStateToProps = ({ }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRefresh: (appId, appKey, types, timeSpan, top, skip, refresh) => dispatch(loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh))
+        onRefresh: (appId, appKey, types, timeSpan, top, skip, refresh) => dispatch(loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh)),
+        onSelect: (entry) => dispatch(currentLoaded(entry))
     };
 }
 

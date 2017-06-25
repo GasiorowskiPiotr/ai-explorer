@@ -47,34 +47,6 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
     }
 };
 
-export function loadAIEntry(appId, appKey, type, entryId) {
-    return function(dispatch) {
-
-        dispatch(loadingAIs());
-
-        var apiHeaders = new Headers();
-        apiHeaders.set('x-api-key', appKey);
-
-        var url = `https://api.applicationinsights.io/beta/apps/${appId}/events/$all/${entryId}`;
-
-        fetch(url, { headers: apiHeaders })
-            .then(data => {
-                data.json().then(items => {
-                    dispatch(currentLoaded(items.value[0]));
-                }).catch(() => {
-                    dispatch(loadingAIsFailed());
-                });
-            })
-            .then(() => {
-                dispatch(loadingAIsFinished());
-            })
-            .catch(() => {
-                dispatch(loadingAIsFailed());
-            });
-
-    }
-};
-
 export function addAIGroup(code) {
     return function(dispatch) {
 
