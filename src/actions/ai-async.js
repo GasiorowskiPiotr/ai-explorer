@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
 import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag, removeAiApp as raa, addAIApp } from './ai';
-import { currentLoaded } from './current';
 import { saveAllApps, getAll, removeById, saveApp as saveAiApp, saveGroupKey, getGroupKey } from '../repository'
 import _ from 'lodash';
 
