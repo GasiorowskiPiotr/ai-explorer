@@ -1,9 +1,6 @@
 import { ADD_AI_APP, REMOVE_AI_APP, AI_LOGS_LOADED, AI_STATS_LOADED, ADD_AI_GROUP } from '../actions/ai';
-import { getAll } from '../repository'
 
-const defaultState = getAll();
-
-export default function ai(state = defaultState || [], action) {
+export default function ai(state = [], action) {
     switch(action.type) {
         case ADD_AI_APP: {
             return [...state, Object.assign({}, action.app, { top: 100, skip: 0, logs: [], filters: { types:['$all'], date: 'PT24H' } }) ]

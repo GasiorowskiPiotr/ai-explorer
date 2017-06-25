@@ -16,9 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import { removeAiApp } from '../../actions/ai';
-
-import { removeById } from '../../repository'
+import { removeAiApp, loadAiApps } from '../../actions/ai-async';
 
 const iconButtonElement = (
   <IconButton
@@ -50,7 +48,7 @@ class _ListAIAppPage extends Component {
 
         this.onAddRequested = this.onAddRequested.bind(this);
         this.selectItem = this.selectItem.bind(this);
-        this.removeFromLocalStorage = this.removeFromLocalStorage.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     static contextTypes = {
@@ -72,13 +70,12 @@ class _ListAIAppPage extends Component {
         return (e) => {
             e && e.preventDefault();
 
-            this.removeFromLocalStorage(app.appId);
             this.props.deleteItem(app.appId);
         }
     }
 
-    removeFromLocalStorage(appId) {
-        removeById(appId);
+    componentDidMount() {
+        this.props.loadItems();
     }
 
     render() {
@@ -118,7 +115,8 @@ const mapStateToProps = ({ai}) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteItem: (id) => dispatch(removeAiApp(id))
+        deleteItem: (id) => dispatch(removeAiApp(id)),
+        loadItems: () => dispatch(loadAiApps())
     };
 };
 
