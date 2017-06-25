@@ -18,7 +18,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "serve": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,6 +27,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "xcopy /Y /E build\\* ..\\ai-explorer-dist\\ai-explorer && cd ..\\ai-explorer-dist\\ai-explorer && git add . && git commit -am\"Next commit\" && git push origin master",
-    "deploy-dev": "xcopy /Y /E build\\* ..\\ai-explorer-dist-dev\\ai-explorer-dev && cd ..\\ai-explorer-dist-dev\\ai-explorer-dev && git add . && git commit -am\"Next commit\" && git push origin master"
+    "deploy-dev": "xcopy /Y /E build\\* ..\\ai-explorer-dist-dev\\ai-explorer-dev && cd ..\\ai-explorer-dist-dev\\ai-explorer-dev && git add . && git commit -am\"Next commit\" && git push origin master",
+    "serve-prod": "serve -s build -p 9900"
   }
 }
