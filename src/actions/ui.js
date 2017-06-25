@@ -2,6 +2,13 @@ export const GO_TO_AI_LIST = 'GO_TO_AI_LIST'; //deprecated
 export const GO_TO_ADD_AI = 'GO_TO_ADD_AI'; // deprecated
 export const GO_TO_AI = 'GO_TO_AI'; // deprecated
 
+export const MESSAGE_HIDDEN = 'MESSAGE_HIDDEN';
+export function messageHidden() {
+    return {
+        type: MESSAGE_HIDDEN
+    };
+}
+
 export const LOADING_AIS = 'LOADING_AIS';
 export function loadingAIs() {
     return {
@@ -17,9 +24,10 @@ export function loadingAIsFinished() {
 }
 
 export const LOADING_AIS_FAILED = 'LOADING_AIS_FAILED';
-export function loadingAIsFailed() {
+export function loadingAIsFailed(message = null) {
     return {
-        type: LOADING_AIS_FAILED
+        type: LOADING_AIS_FAILED,
+        message
     };
 }
 
