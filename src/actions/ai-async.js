@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
 import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag, removeAiApp as raa, addAIApp } from './ai';
-import { currentLoaded } from './current';
 import { saveAllApps, getAll, removeById, saveApp as saveAiApp, saveGroupKey, getGroupKey } from '../repository'
 import _ from 'lodash';
 
@@ -44,34 +43,6 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
                     return data.json().then((resp) => dispatch(aiStatsLoaded(appId, resp['@odata.count'])));
                 });
         });
-    }
-};
-
-export function loadAIEntry(appId, appKey, type, entryId) {
-    return function(dispatch) {
-
-        dispatch(loadingAIs());
-
-        var apiHeaders = new Headers();
-        apiHeaders.set('x-api-key', appKey);
-
-        var url = `https://api.applicationinsights.io/beta/apps/${appId}/events/$all/${entryId}`;
-
-        fetch(url, { headers: apiHeaders })
-            .then(data => {
-                data.json().then(items => {
-                    dispatch(currentLoaded(items.value[0]));
-                }).catch(() => {
-                    dispatch(loadingAIsFailed());
-                });
-            })
-            .then(() => {
-                dispatch(loadingAIsFinished());
-            })
-            .catch(() => {
-                dispatch(loadingAIsFailed());
-            });
-
     }
 };
 

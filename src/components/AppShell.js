@@ -18,7 +18,7 @@ import ListLogsPage from '../pages/list-logs';
 import EntryPage from '../pages/entry';
 import AddAIGroupPage from '../pages/add-ai-group';
 
-import { goToAddAi, goToAiList, loadingAIsFinished, messageHidden } from '../actions/ui';
+import { goToAddAi, goToAiList, messageHidden } from '../actions/ui';
 
 const loaderStyle = {
     position: 'fixed'
