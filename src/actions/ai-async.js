@@ -1,8 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import { loadingAIs, loadingAIsFinished, loadingAIsFailed } from './ui';
-import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag } from './ai';
-import { currentLoaded } from './current';
-import { saveAllApps } from '../repository'
+import { aiLogsLoaded, aiStatsLoaded, addAIGroup as aag, removeAiApp as raa, addAIApp } from './ai';
+import { saveAllApps, getAll, removeById, saveApp as saveAiApp, saveGroupKey, getGroupKey } from '../repository'
 import _ from 'lodash';
 
 export const LOAD_AI_LOGS = 'LOAD_AI_LOGS';
@@ -47,49 +46,92 @@ export function loadAILogs(appId, appKey, types, timeSpan, top, skip, refresh) {
     }
 };
 
-export function loadAIEntry(appId, appKey, type, entryId) {
-    return function(dispatch) {
-
-        dispatch(loadingAIs());
-
-        var apiHeaders = new Headers();
-        apiHeaders.set('x-api-key', appKey);
-
-        var url = `https://api.applicationinsights.io/beta/apps/${appId}/events/$all/${entryId}`;
-
-        fetch(url, { headers: apiHeaders })
-            .then(data => {
-                data.json().then(items => {
-                    dispatch(currentLoaded(items.value[0]));
-                    dispatch(loadingAIsFinished());
-                }).catch(() => {
-                    dispatch(loadingAIsFailed());
-                });
-            }).catch(() => {
-                dispatch(loadingAIsFailed());
-            });
-
-    }
-};
-
 export function addAIGroup(code) {
     return function(dispatch) {
 
         dispatch(loadingAIs());
 
-        var url = `https://api-ai-explorer.azurewebsites.net/groups/${code}`;
+        saveGroupKey(code).then(() => {
 
-        fetch(url)
-            .then(data => {
-                return data.json().then(resp => {
-                    saveAllApps(resp.apps);
-                    
-                    dispatch(aag(resp.apps));
-                    dispatch(loadingAIsFinished());
+            var url = `https://api-ai-explorer.azurewebsites.net/groups/${code}`;
+
+            return fetch(url)
+                .then(data => {
+                    return data.json().then(resp => {
+                        dispatch(aag(resp.apps));
+
+                        return saveAllApps(resp.apps)
+                            .then(() => dispatch(loadingAIsFinished()));
+                    });
+                }).catch(() => {
+                    dispatch(loadingAIsFailed());
                 });
-            }).catch(() => {
-                dispatch(loadingAIsFailed());
-            })
-
+        }).catch(() => {
+            dispatch(loadingAIsFailed('Adding AI Group failed. This may be caused by lack of connectivity, legacy browser or private mode.'));
+        });
     }
 };
+
+let isLoaded = false;
+
+export function loadAiApps() {
+    return function(dispatch) {
+        
+        if(isLoaded)
+            return;
+
+        dispatch(loadingAIs());
+
+        getAll().then(apps => {
+
+            isLoaded = true;
+
+            if(apps.length > 0) {
+                dispatch(aag(apps));
+                dispatch(loadingAIsFinished());
+
+                return Promise.resolve();
+
+            } else {
+                return getGroupKey().then((key) => {
+
+                    if(key) {
+                        dispatch(addAIGroup(key));
+                    } else {
+                        dispatch(loadingAIsFinished());
+                    }
+                });
+            }
+            
+        }).catch(() => dispatch(loadingAIsFailed('Loading AI Apps failed. This may be caused by lack of connectivity, legacy browser or private mode.')));
+    }
+}
+
+export function removeAiApp(appId) {
+    return function(dispatch) {
+        dispatch(loadingAIs());
+        dispatch(raa(appId));
+
+        removeById(appId).then(() => {
+            dispatch(loadingAIsFinished());
+        }).catch(() => {
+            dispatch(loadingAIsFailed('Removing AI App failed. This may be caused by legacy browser or private mode.'));
+        });
+    }
+}
+
+export function saveApp(name, id, key) {
+    return function(dispatch) {
+        dispatch(loadingAIs());
+
+        dispatch(addAIApp(id, key, name));
+
+        saveAiApp(name, id, key)
+            .then(() => {
+                dispatch(loadingAIsFinished());
+            })
+            .catch(() => {
+                dispatch(loadingAIsFailed('Adding AI App failed. This may be caused by legacy browser or private mode.'));
+            });
+    }
+}

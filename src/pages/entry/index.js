@@ -4,9 +4,6 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { getAiApp } from '../../store';
-import { loadAIEntry } from '../../actions/ai-async';
-
 import Trace from './trace';
 import CustomEvent from './customEvent';
 import PageView from './pageView';
@@ -19,10 +16,6 @@ class _EntryPage extends Component {
     static contextTypes = {
         router: PropTypes.object.isRequired,
     };
-
-    componentDidMount() {
-        this.props.onRefresh(this.props.app.appId, this.props.app.appKey, this.props.type, this.props.entryId);
-    }
 
     render() {
         
@@ -67,19 +60,12 @@ class _EntryPage extends Component {
 
 const mapStateToProps = ({ current }, ownProps) => {
     return {
-        app: getAiApp(ownProps.match.params.id),
         entryId: ownProps.match.params.eid,
         type: ownProps.match.params.etype,
         entry: current
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onRefresh: (appId, appKey, type, entryId) => dispatch(loadAIEntry(appId, appKey, type, entryId))
-    };
-};
-
-const EntryPage = withRouter(connect(mapStateToProps, mapDispatchToProps)(_EntryPage));
+const EntryPage = withRouter(connect(mapStateToProps)(_EntryPage));
 
 export default EntryPage;
