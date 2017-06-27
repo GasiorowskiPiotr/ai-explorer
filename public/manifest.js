@@ -16,6 +16,11 @@
             "src": "ai_196.png",
             "sizes": "196x196",
             "type": "image/png"
+        },
+        {
+            "src": "ai_512.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ],
     "start_url": "/",
