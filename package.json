@@ -18,6 +18,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "lighthouse": "^2.1.0",
     "react-scripts": "1.0.7",
     "serve": "^6.0.0"
   },
@@ -28,6 +29,8 @@
     "eject": "react-scripts eject",
     "deploy": "xcopy /Y /E build\\* ..\\ai-explorer-dist\\ai-explorer && cd ..\\ai-explorer-dist\\ai-explorer && git add . && git commit -am\"Next commit\" && git push origin master",
     "deploy-dev": "xcopy /Y /E build\\* ..\\ai-explorer-dist-dev\\ai-explorer-dev && cd ..\\ai-explorer-dist-dev\\ai-explorer-dev && git add . && git commit -am\"Next commit\" && git push origin master",
-    "serve-prod": "serve -s build -p 9900"
+    "serve-prod": "serve -s build -p 9900",
+    "lighthouse-prod": "lighthouse https://ai-explorer.azurewebsites.net/ --view",
+    "lighthouse-dev": "lighthouse https://ai-explorer-dev.azurewebsites.net/ --view"
   }
 }
